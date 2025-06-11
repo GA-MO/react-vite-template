@@ -2,6 +2,7 @@ import { useDemoList, useCreateDemo } from '../datas/demo/hooks'
 import { Button, Checkbox, Group, Select, TextInput } from '@mantine/core'
 import type { ComboboxItem } from '@mantine/core'
 import { isNotEmpty, useForm } from '@mantine/form'
+import { notifications } from '@mantine/notifications'
 
 export default function Form() {
   const item = useDemoList({ limit: 10 })
@@ -29,9 +30,19 @@ export default function Form() {
     item.data?.map((item) => ({ label: item.name, value: item.id.toString() })) || []
 
   const handleSubmit = async (values: typeof form.values) => {
-    create.mutate({
+    const body = {
       id: 0,
       name: values.email
+    }
+    create.mutate(body, {
+      onSuccess: () => {
+        form.reset()
+        notifications.show({
+          title: 'Success',
+          message: 'Your form has been submitted',
+          position: 'top-center'
+        })
+      }
     })
   }
 

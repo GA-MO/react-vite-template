@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { getQueryClient } from '../../plugins/reatQuery'
-import { notifications } from '@mantine/notifications'
+import { getQueryClient } from '../../plugins/reactQuery'
 import { fetchDemoList, fetchDemoCreate } from './services'
 import type { RequestDemoList } from './types'
 
@@ -17,12 +16,6 @@ export const useCreateDemo = () => {
     mutationFn: fetchDemoCreate,
     onSuccess: () => {
       getQueryClient().invalidateQueries({ queryKey: ['demoList'] })
-
-      notifications.show({
-        title: 'Success',
-        message: 'Your form has been submitted',
-        position: 'bottom-center'
-      })
     }
   })
 }
