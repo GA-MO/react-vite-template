@@ -3,13 +3,15 @@ import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
 
 import { theme } from './theme'
-import { AppErrorModal } from './AppErrorModal'
+import { AppErrorModal, MODAL_APPLICATION_ERROR } from './AppErrorModal'
 
 export default function Provider(props: { children: React.ReactNode }) {
   return (
     <MantineProvider theme={theme}>
       <Notifications />
-      <ModalsProvider modals={{ applicationError: AppErrorModal }}>{props.children}</ModalsProvider>
+      <ModalsProvider modals={{ [MODAL_APPLICATION_ERROR]: AppErrorModal }}>
+        {props.children}
+      </ModalsProvider>
     </MantineProvider>
   )
 }

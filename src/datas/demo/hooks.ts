@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { getQueryClient } from '../../plugins/reactQuery'
+import { getQueryClient } from '../../libs/reactQuery'
 import { fetchDemoList, fetchDemoCreate } from './services'
 import type { RequestDemoList } from './types'
 

@@ -1,8 +1,9 @@
 import type { ServiceError } from '../../datas/types'
 import { modals } from '@mantine/modals'
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
-import { apiClient } from '../axios/apiClient'
+import { httpClient } from '../axios/apiClient'
 import { removeCookie } from 'typescript-cookie'
+import { MODAL_APPLICATION_ERROR } from '../mantine/AppErrorModal'
 
 export interface FetcherOptions extends AxiosRequestConfig {
   mock?: boolean
@@ -19,7 +20,7 @@ export const defaultOptions: FetcherOptions = {
   showErrorDialog: true
 }
 
-const shouldUseMockup = (options: FetcherOptions) => {
+function shouldUseMockup(options: FetcherOptions) {
   if (!import.meta.env.DEV) return false
   if (!options.mock) return false
   if (options.jsonMockup === '') return false
@@ -37,10 +38,10 @@ function createFetcher<T>(options: FetcherOptions) {
     async function callFetch() {
       try {
         if (shouldUseMockup(fetchOptions)) {
-          const response = await apiClient.get<T>(`${fetchOptions.jsonMockup}`)
+          const response = await httpClient.get<T>(`${fetchOptions.jsonMockup}`)
           resolve(response.data)
         } else {
-          const response = await apiClient.request<T>(fetchOptions)
+          const response = await httpClient.request<T>(fetchOptions)
           resolve(response.data)
         }
       } catch (error) {
@@ -49,7 +50,7 @@ function createFetcher<T>(options: FetcherOptions) {
         let isUnauthorized = false
 
         if (axios.isAxiosError(error)) {
-          title = error.response?.statusText ?? 'Error'
+          title = error.response?.statusText ?? title
           message = error.response?.data.message || error.message
           isUnauthorized = error.response?.status === 401
         }
@@ -66,7 +67,7 @@ function createFetcher<T>(options: FetcherOptions) {
 
         if (fetchOptions.showErrorDialog) {
           modals.openContextModal({
-            modal: 'applicationError',
+            modal: MODAL_APPLICATION_ERROR,
             withCloseButton: false,
             centered: true,
             innerProps: {

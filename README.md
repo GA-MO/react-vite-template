@@ -1,54 +1,99 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Table of Contents
 
-Currently, two official plugins are available:
+- [Libraries](#libraries)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Run Proxy](#run-proxy)
+- [Run Dev Server](#run-dev-server)
+- [Run Test](#run-test)
+- [Run Lint](#run-lint)
+- [Run Build](#run-build)
+- [Docker Build](#docker-build)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Libraries
 
-## Expanding the ESLint configuration
+- [Mantine UI](https://mantine.dev/)
+  - [Hooks](https://mantine.dev/hooks/package/)
+  - [Components](https://mantine.dev/core/package/)
+  - [Forms](https://mantine.dev/form/package/)
+  - [Notifications](https://mantine.dev/x/notifications/)
+  - [Modals](https://mantine.dev/x/modals/)
+  - [Dates](https://mantine.dev/dates/getting-started/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [React Query](https://tanstack.com/query/latest)
+- [Zustand](https://zustand-demo.pmnd.rs/)
+- [React Router](https://reactrouter.com/)
+- [Axios](https://axios-http.com/)
+- [Typescript Cookie](https://github.com/js-cookie/js.cookie)
+- [Vitest](https://vitest.dev/)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Requirements
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- [Bun](https://bun.sh/)
+- [Docker](https://www.docker.com/)
+
+### Installation
+
+```sh
+bun install
+
+# install local-cors-proxy for proxy api
+bun install -g local-cors-proxy
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Run Proxy
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```sh
+bun run proxy
+```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### Run Dev Server
+
+#### Set Cookie
+
+Login to the [Singha Online System](https://sol-backoffice-uat.sbpds-dev.com) and get the cookie name `SID`, then set the cookie to the `.env.development.local` file
+
+```sh
+# .env.development.local
+VITE_APP_COOKIE=your_cookie_here
+```
+
+```sh
+bun run dev
+```
+
+### Run Test
+
+```sh
+bun run test
+bun run test:watch
+bun run test:coverage
+```
+
+### Run Lint
+
+```sh
+bun run lint
+```
+
+### Run Build
+
+```sh
+bun run build
+bun run build:dev
+bun run build:staging
+bun run build:prod
+```
+
+### docker build
+
+```sh
+
+## BUILD_ENV
+#  - uat,prd
+
+docker build -t app-name --build-arg BUILD_ENV=uat .
+
 ```

@@ -1,4 +1,4 @@
-import { createTheme, rem } from '@mantine/core'
+import { createTheme } from '@mantine/core'
 
 import '@mantine/dates/styles.css'
 import '@mantine/notifications/styles.css'

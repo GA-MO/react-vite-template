@@ -1,6 +1,8 @@
 import { Text, Button, Title, Space } from '@mantine/core'
 import type { ContextModalProps } from '@mantine/modals'
 
+export const MODAL_APPLICATION_ERROR: string = 'applicationError'
+
 interface AppErrorModalInnerProps {
   title: string
   message: string

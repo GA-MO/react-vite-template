@@ -1,17 +1,18 @@
 import type { DemoItem, RequestDemoList } from './types'
 
-import createFetcher from '../../plugins/createFetcher'
+import createFetcher from '../../libs/createFetcher'
 import type { BaseResponse } from '../types'
 
-export const fetchDemoList = (params: RequestDemoList) => {
+export function fetchDemoList(params: RequestDemoList) {
   return createFetcher<BaseResponse<DemoItem[]>>({
     url: `/api/demo/list`,
     jsonMockup: '/apiMockup/demo/list.json',
+    delay: 3000,
     params
   })
 }
 
-export const fetchDemoCreate = (params: DemoItem) => {
+export function fetchDemoCreate(params: DemoItem) {
   return createFetcher<BaseResponse<DemoItem>>({
     method: 'POST',
     url: `/api/demo/create`,

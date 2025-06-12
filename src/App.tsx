@@ -1,5 +1,5 @@
-import UIProvider from './plugins/mantine/provider'
-import QueryProvider from './plugins/reactQuery/provider'
+import UIProvider from './libs/mantine/provider'
+import QueryProvider from './libs/reactQuery/provider'
 import AppRoutes from './AppRoutes'
 
 export default function App() {

@@ -8,8 +8,14 @@ export default function Header() {
         <NavLink to='/'>
           {({ isActive }) => <Button variant={isActive ? 'filled' : 'outline'}>Home</Button>}
         </NavLink>
-        <NavLink to='/about'>
-          {({ isActive }) => <Button variant={isActive ? 'filled' : 'outline'}>About</Button>}
+        <NavLink to='/store'>
+          {({ isActive }) => <Button variant={isActive ? 'filled' : 'outline'}>Store</Button>}
+        </NavLink>
+        <NavLink to='/form'>
+          {({ isActive }) => <Button variant={isActive ? 'filled' : 'outline'}>Form</Button>}
+        </NavLink>
+        <NavLink to='/query'>
+          {({ isActive }) => <Button variant={isActive ? 'filled' : 'outline'}>Query</Button>}
         </NavLink>
       </div>
     </div>
