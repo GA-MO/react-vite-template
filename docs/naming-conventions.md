@@ -4,12 +4,12 @@ This document outlines the naming conventions used in our React project to maint
 
 ## Table of Contents
 
-- 🧩 [Components](#components)
-- 📁 [Files and Folders](#files-and-folders)
-- 🔤 [Variables and Functions](#variables-and-functions)
-- 🔒 [Constants](#constants)
-- 🎨 [CSS/SCSS](#cssscss)
-- 📝 [TypeScript Types and Interfaces](#typescript-types-and-interfaces)
+- 🧩 [Components](#-components)
+- 📁 [Files and Folders](#-files-and-folders)
+- 🔤 [Variables and Functions](#-variables-and-functions)
+- 🔒 [Constants](#-constants)
+- 🎨 [CSS/SCSS](#-cssscss)
+- 📝 [TypeScript Types and Interfaces](#-typescript-types-and-interfaces)
 
 ## 🧩 Components
 
