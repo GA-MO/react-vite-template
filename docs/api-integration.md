@@ -4,12 +4,12 @@ This guide explains how to integrate with APIs using our template's built-in uti
 
 ## Table of Contents
 
-1. [Folder Structure](#-folder-structure)
-2. [Type Definitions](#-type-definitions)
-3. [API Services](#-api-services)
-4. [Query Hooks](#-query-hooks)
-5. [Mockup JSON](#-mockup-json)
-6. [Usage Examples](#-usage-examples)
+1. [Folder Structure](#folder-structure)
+2. [Type Definitions](#type-definitions)
+3. [API Services](#api-services)
+4. [Query Hooks](#query-hooks)
+5. [Mockup JSON](#mockup-json)
+6. [Usage Examples](#usage-examples)
 
 ## Folder Structure
 
