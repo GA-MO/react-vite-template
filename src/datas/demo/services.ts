@@ -1,7 +1,7 @@
 import type { DemoItem, RequestDemoList } from './types'
 
 import createFetcher from '../../libs/createFetcher'
-import type { BaseResponse } from '../types'
+import type { BaseResponse } from '../../types/response'
 
 export function fetchDemoList(params: RequestDemoList) {
   return createFetcher<BaseResponse<DemoItem[]>>({

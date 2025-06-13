@@ -1,4 +1,4 @@
-import type { ServiceError } from '../../datas/types'
+import type { ServiceError } from '../../types/serviceError'
 import { modals } from '@mantine/modals'
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
 import { httpClient } from '../axios/apiClient'

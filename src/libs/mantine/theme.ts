@@ -1,30 +1,25 @@
-import { createTheme } from '@mantine/core'
+import { colorsTuple, createTheme } from '@mantine/core'
 
 import '@mantine/dates/styles.css'
 import '@mantine/notifications/styles.css'
 
+const primary = colorsTuple('#4389f6')
+const secondary = colorsTuple('#333333')
+const fontFamily = 'Noto Sans Thai, sans-serif'
+// const headingsFontFamily = 'Greycliff CF, sans-serif'
+
 export const theme = createTheme({
   primaryColor: 'primary',
   colors: {
-    primary: [
-      '#fff0e4',
-      '#ffe0cf',
-      '#fac0a1',
-      '#f69e6e',
-      '#f28043',
-      '#f06e27',
-      '#f06418',
-      '#d6530c',
-      '#bf4906',
-      '#a73c00'
-    ]
+    primary,
+    secondary
   },
-  white: '#fff',
-  black: '#000',
+  white: '#ffffff',
+  black: '#000000',
   defaultRadius: 'md',
-  fontFamily: 'Roboto, sans-serif',
+  fontFamily,
   headings: {
-    fontFamily: 'Greycliff CF, sans-serif'
+    // fontFamily: headingsFontFamily
   },
 
   fontSmoothing: true,

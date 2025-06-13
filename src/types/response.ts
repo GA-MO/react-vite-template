@@ -3,8 +3,3 @@ export type BaseResponse<T> = {
   message: string
   data: T
 }
-
-export type ServiceError = {
-  title: string
-  message: string
-}

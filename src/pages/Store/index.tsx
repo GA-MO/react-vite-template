@@ -11,7 +11,9 @@ export default function Store() {
         <div className='flex gap-2'>
           <Button onClick={increase}>Increase</Button>
           <Button onClick={decrease}>Decrease</Button>
-          <Button onClick={reset}>Reset</Button>
+          <Button variant='outline' onClick={reset}>
+            Reset
+          </Button>
         </div>
       </div>
     </div>
