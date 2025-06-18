@@ -3,6 +3,7 @@
 ## 📝 Documentation
 
 - [Naming Conventions](./docs/naming-conventions.md)
+- [React TypeScript Best Practices](./docs/react-typescript-best-practices.md)
 - [API Integration](./docs/api-integration.md)
 
 ## 📑 Table of Contents
@@ -42,6 +43,7 @@
 
 ### 📦 VS Code Extensions
 
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
 
