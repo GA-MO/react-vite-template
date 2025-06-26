@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 import fs from 'fs'
+import { glslify } from 'vite-plugin-glslify'
 
 function excludeMsw() {
   return {
@@ -20,7 +21,7 @@ function excludeMsw() {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), excludeMsw()],
+  plugins: [react(), tailwindcss(), glslify(), excludeMsw()],
   server: {
     port: 3000
   },

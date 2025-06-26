@@ -1,9 +1,14 @@
+import MyGeometry from '../../components/Geometry'
+// import MySphere from '../../components/MySphere'
+// import ParticleEffect from '../../components/ParticleEffect'
+
 export default function Home() {
   return (
-    <div>
-      <div className='mt-20 flex flex-col items-center justify-center'>
-        <h1 className='mb-4 text-3xl font-bold'>React Template</h1>
-      </div>
+    <div className='relative h-[300vh] w-screen bg-gradient-to-br from-gray-900 via-black to-blue-900'>
+      {/* Particle background effect */}
+      {/* <ParticleEffect enableControls={true} particleCount={400} className='fixed inset-0 z-0' />
+      <MySphere /> */}
+      <MyGeometry />
     </div>
   )
 }
