@@ -7,7 +7,6 @@ import * as THREE from 'three'
 interface ParticleSystemProps {
   count?: number
 }
-
 function ParticleSystem({ count = 1000 }: ParticleSystemProps) {
   const ref = useRef<THREE.Points>(null!)
   const { viewport, size } = useThree()

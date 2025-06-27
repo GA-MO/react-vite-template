@@ -1,13 +1,15 @@
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, type RootState } from '@react-three/fiber'
 
 import * as THREE from 'three'
-import GSAP from 'gsap'
+import gsap from 'gsap'
 
 import vertexShader from './shaders/vertex.glsl'
 import fragmentShader from './shaders/fragment.glsl'
-import { useMemo, useRef } from 'react'
-import { Mesh, ShaderMaterial } from 'three'
+import { useEffect, useMemo, useRef } from 'react'
+import { BufferGeometry, Mesh, ShaderMaterial, type NormalBufferAttributes } from 'three'
 import { useControls } from 'leva'
+import useScrollControl from './hooks/useScrollControl'
+import { useMouse } from '@mantine/hooks'
 
 // Helper function to convert hex to RGB
 function hexToRgb(hex: string): [number, number, number] {
@@ -17,82 +19,62 @@ function hexToRgb(hex: string): [number, number, number] {
     : [1, 1, 1]
 }
 
-function Geometry() {
-  const settings: Record<string, { start: number; end: number }> = {
-    // vertex
-    uFrequency: {
-      start: 0,
-      end: 4
-    },
-    uAmplitude: {
-      start: 4,
-      end: 4
-    },
-    uDensity: {
-      start: 1,
-      end: 1
-    },
-    uStrength: {
-      start: 0,
-      end: 1.1
-    },
-    // fragment
-    uDeepPurple: {
-      // max 1
-      start: 1,
-      end: 0
-    },
-    uOpacity: {
-      // max 1
-      start: 0.1,
-      end: 0.66
-    }
-  }
-
+interface GeometrySphereProps {
+  isDebug?: boolean
+}
+function GeometrySphere(props: GeometrySphereProps) {
   const uniforms = useMemo(
     () => ({
-      uFrequency: { value: settings.uFrequency.start },
-      uAmplitude: { value: settings.uAmplitude.start },
-      uDensity: { value: settings.uDensity.start },
-      uStrength: { value: settings.uStrength.start },
-      uDeepPurple: { value: settings.uDeepPurple.start },
-      uOpacity: { value: settings.uOpacity.start },
+      uTime: { value: 0 },
+      uSpeed: { value: 0 },
+      uNoiseDensity: { value: 0 },
+      uNoiseStrength: { value: 0 },
+      uFrequency: { value: 0 },
+      uAmplitude: { value: 0 },
+      uAlpha: { value: 1 },
       uColor: { value: new THREE.Vector3(1.0, 1.0, 1.0) } // Default white color
     }),
     []
   )
 
   const shaderRef = useRef<ShaderMaterial>(null)
-  const meshRef = useRef<Mesh>(null)
+  const meshRef = useRef<Mesh<BufferGeometry<NormalBufferAttributes>>>(null)
+
+  useScrollControl(meshRef.current)
 
   const geometryControls = useControls('Geometry', {
+    uTime: {
+      value: 0,
+      min: 0,
+      max: 10
+    },
+    uSpeed: {
+      value: 0,
+      min: 0,
+      max: 10
+    },
+    uNoiseDensity: {
+      value: 0,
+      min: 0,
+      max: 10
+    },
+    uNoiseStrength: {
+      value: 0,
+      min: 0,
+      max: 10
+    },
     uFrequency: {
-      value: settings.uFrequency.start,
+      value: 0,
       min: 0,
       max: 10
     },
     uAmplitude: {
-      value: settings.uAmplitude.start,
+      value: 0,
       min: 0,
       max: 10
     },
-    uDensity: {
-      value: settings.uDensity.start,
-      min: 0,
-      max: 10
-    },
-    uStrength: {
-      value: settings.uStrength.start,
-      min: 0,
-      max: 10
-    },
-    uDeepPurple: {
-      value: settings.uDeepPurple.start,
-      min: 0,
-      max: 1
-    },
-    uOpacity: {
-      value: settings.uOpacity.start,
+    uAlpha: {
+      value: 1,
       min: 0,
       max: 1
     },
@@ -134,25 +116,19 @@ function Geometry() {
     }
   })
 
-  useFrame((state) => {
+  const { x, y } = useMouse()
+
+  function debug(state: RootState) {
     if (meshRef.current && shaderRef.current) {
-      GSAP.to(meshRef.current.rotation, {
+      gsap.to(meshRef.current.rotation, {
         x: geometryControls.rotationX,
         y: geometryControls.rotationY,
         z: geometryControls.rotationZ
       })
 
-      for (const key in settings) {
-        if (settings[key].start !== settings[key].end) {
-          GSAP.to(shaderRef.current?.uniforms?.[key], {
-            value: settings[key].start + (settings[key].end - settings[key].start) * 0.05
-          })
-        }
-      }
-
       // Update color from hex
       const [r, g, b] = hexToRgb(geometryControls.color)
-      GSAP.to(shaderRef.current.uniforms.uColor.value, {
+      gsap.to(shaderRef.current.uniforms.uColor.value, {
         x: r,
         y: g,
         z: b
@@ -161,10 +137,13 @@ function Geometry() {
       // const mouseX = state.pointer.x * 4
       // const mouseY = state.pointer.y * 2
 
-      GSAP.to(shaderRef.current.uniforms.uFrequency, { value: geometryControls.uFrequency })
-      GSAP.to(shaderRef.current.uniforms.uAmplitude, { value: geometryControls.uAmplitude })
-      GSAP.to(shaderRef.current.uniforms.uDensity, { value: geometryControls.uDensity })
-      GSAP.to(shaderRef.current.uniforms.uStrength, { value: geometryControls.uStrength })
+      gsap.to(shaderRef.current.uniforms.uTime, { value: geometryControls.uTime })
+      gsap.to(shaderRef.current.uniforms.uSpeed, { value: geometryControls.uSpeed })
+      gsap.to(shaderRef.current.uniforms.uNoiseDensity, { value: geometryControls.uNoiseDensity })
+      gsap.to(shaderRef.current.uniforms.uNoiseStrength, { value: geometryControls.uNoiseStrength })
+      gsap.to(shaderRef.current.uniforms.uFrequency, { value: geometryControls.uFrequency })
+      gsap.to(shaderRef.current.uniforms.uAmplitude, { value: geometryControls.uAmplitude })
+      gsap.to(shaderRef.current.uniforms.uAlpha, { value: geometryControls.uAlpha })
 
       // meshRef.current?.scale.set(
       //   state.viewport.width < state.viewport.height ? 0.75 : 1,
@@ -172,11 +151,46 @@ function Geometry() {
       //   state.viewport.width < state.viewport.height ? 0.75 : 1
       // )
 
-      GSAP.to(state.camera.position, {
+      gsap.to(state.camera.position, {
         x: cameraControls.positionX,
         y: cameraControls.positionY,
         z: cameraControls.positionZ
       })
+    }
+  }
+
+  function updateShader() {
+    if (shaderRef.current) {
+      gsap.to(shaderRef.current.uniforms.uAmplitude, {
+        value: (y / window.innerHeight) * 1,
+        duration: 5,
+        ease: 'expo'
+      })
+      gsap.to(shaderRef.current.uniforms.uFrequency, {
+        value: (y / window.innerHeight) * 10,
+        duration: 5,
+        ease: 'expo'
+      })
+      gsap.to(shaderRef.current.uniforms.uNoiseDensity, {
+        value: (x / window.innerWidth) * 1.8,
+        duration: 5,
+        ease: 'expo'
+      })
+      gsap.to(shaderRef.current.uniforms.uNoiseStrength, {
+        value: (x / window.innerWidth) * 1,
+        duration: 5,
+        ease: 'expo'
+      })
+    }
+  }
+
+  useEffect(() => {
+    updateShader()
+  }, [x, y])
+
+  useFrame((state) => {
+    if (props.isDebug) {
+      debug(state)
     }
   })
 
@@ -196,21 +210,23 @@ function Geometry() {
   )
 }
 
-export default function MyGeometry() {
+export default function GeometryCanvas() {
   return (
     <Canvas
-      camera={{ position: [0, 0, 4], fov: 45, near: 0.1, far: 1000 }}
+      camera={{ position: [0, 0, 4], fov: 50, zoom: 1, near: 1, far: 2e3 }}
       gl={{ antialias: true, alpha: true }}
       style={{
         position: 'fixed',
         top: 0,
         left: 0,
+        bottom: 0,
+        right: 0,
         width: '100%',
         height: '100vh'
       }}
     >
       <ambientLight intensity={0.5} />
-      <Geometry />
+      <GeometrySphere isDebug={false} />
     </Canvas>
   )
 }
